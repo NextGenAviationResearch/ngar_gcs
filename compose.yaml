@@ -1,0 +1,19 @@
+services:
+  ardudeck:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        ARDUDECK_VERSION: "0.0.29"
+    image: ardudeck:light
+    network_mode: host
+    privileged: true
+    environment:
+      DISPLAY: ${DISPLAY:-:0}
+      XAUTHORITY: /tmp/.docker.xauth
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${HOME}/.Xauthority:/tmp/.docker.xauth:ro
+      - /dev:/dev:rw
+    stdin_open: true
+    tty: true
